@@ -49,5 +49,5 @@ with ontology:
     region_america_instance.Triggers.append(scale_up_instance)
 
 # Save Ontology
-ontology.save(file="../ontology/container_scaling.owl")
+ontology.save(file="ontology/container_scaling.owl")
 print("Ontology saved as 'container_scaling.owl'")

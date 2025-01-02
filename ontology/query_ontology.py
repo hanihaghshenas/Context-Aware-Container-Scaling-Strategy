@@ -1,7 +1,7 @@
 from owlready2 import *
 
 # Load the ontology
-ontology = get_ontology("../ontology/container_scaling.owl").load()
+ontology = get_ontology("ontology/container_scaling.owl").load()
 
 # Query Ontology
 def query_ontology():
