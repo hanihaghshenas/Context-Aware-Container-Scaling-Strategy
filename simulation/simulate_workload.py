@@ -2,7 +2,12 @@ from celery import Celery
 import random
 import time
 
-app = Celery('simulation', broker='redis://localhost:6379/0')
+app = Celery(
+    'simulation',
+    broker='redis://localhost:6379/0',
+    backend='redis://localhost:6379/0'  # Enable result backend
+)
+
 
 @app.task
 def generate_workload(container_id):
