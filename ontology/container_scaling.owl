@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://example.org/container_scaling.owl"
+         xmlns="http://example.org/container_scaling.owl#">
+
+<owl:Ontology rdf:about="http://example.org/container_scaling.owl"/>
+
+<owl:ObjectProperty rdf:about="#HasContext">
+  <rdfs:domain rdf:resource="#Container"/>
+  <rdfs:range rdf:resource="#Context"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#Triggers">
+  <rdfs:domain rdf:resource="#Context"/>
+  <rdfs:range rdf:resource="#ScalingAction"/>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Container">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Context">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ScalingAction">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CPUHeavy">
+  <rdfs:subClassOf rdf:resource="#Container"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MemoryHeavy">
+  <rdfs:subClassOf rdf:resource="#Container"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PeakHours">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+</owl:Class>
+
+<owl:Class rdf:about="#GeographicRegion">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ScaleUp">
+  <rdfs:subClassOf rdf:resource="#ScalingAction"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ScaleDown">
+  <rdfs:subClassOf rdf:resource="#ScalingAction"/>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#Container1">
+  <rdf:type rdf:resource="#CPUHeavy"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container2">
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+  <HasContext rdf:resource="#region_europe_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container3">
+  <rdf:type rdf:resource="#CPUHeavy"/>
+  <HasContext rdf:resource="#region_america_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container4">
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#peak_hours_instance">
+  <rdf:type rdf:resource="#PeakHours"/>
+  <Triggers rdf:resource="#scale_up_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#region_europe_instance">
+  <rdf:type rdf:resource="#GeographicRegion"/>
+  <Triggers rdf:resource="#scale_down_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#region_america_instance">
+  <rdf:type rdf:resource="#GeographicRegion"/>
+  <Triggers rdf:resource="#scale_up_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#scale_up_instance">
+  <rdf:type rdf:resource="#ScaleUp"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#scale_down_instance">
+  <rdf:type rdf:resource="#ScaleDown"/>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>

@@ -30,24 +30,24 @@ with ontology:
     container4 = MemoryHeavy("Container4")
 
     # Add Instances for Contexts and Scaling Actions
-    peak_hours = PeakHours("PeakHours")
-    region_europe = GeographicRegion("RegionEurope")
-    region_america = GeographicRegion("RegionAmerica")
+    peak_hours_instance = PeakHours("peak_hours_instance")
+    region_europe_instance = GeographicRegion("region_europe_instance")
+    region_america_instance = GeographicRegion("region_america_instance")
 
-    scale_up = ScaleUp("ScaleUp")
-    scale_down = ScaleDown("ScaleDown")
+    scale_up_instance = ScaleUp("scale_up_instance")
+    scale_down_instance = ScaleDown("scale_down_instance")
 
     # Link containers to contexts
-    container1.HasContext.append(peak_hours)
-    container2.HasContext.append(region_europe)
-    container3.HasContext.append(region_america)
-    container4.HasContext.append(peak_hours)
+    container1.HasContext.append(peak_hours_instance)
+    container2.HasContext.append(region_europe_instance)
+    container3.HasContext.append(region_america_instance)
+    container4.HasContext.append(peak_hours_instance)
 
     # Link contexts to scaling actions
-    peak_hours.Triggers.append(scale_up)
-    region_europe.Triggers.append(scale_down)
-    region_america.Triggers.append(scale_up)
+    peak_hours_instance.Triggers.append(scale_up_instance)
+    region_europe_instance.Triggers.append(scale_down_instance)
+    region_america_instance.Triggers.append(scale_up_instance)
 
 # Save Ontology
-ontology.save(file="ontology/container_scaling.owl")
+ontology.save(file="../ontology/container_scaling.owl")
 print("Ontology saved as 'container_scaling.owl'")
