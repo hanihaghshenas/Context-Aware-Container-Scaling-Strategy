@@ -5,10 +5,13 @@ from owlready2 import get_ontology
 import numpy as np
 
 # Load the ontology
-ontology = get_ontology("../ontology/container_scaling.owl").load()
+ontology = get_ontology("ontology/container_scaling.owl").load()
 
 # Hybrid Model with Ontology Integration
-def hybrid_model_with_ontology():
+def hybrid_model_with_ontology(workloads):
+    print("=== Simulated Workloads ===")
+    for container_id, workload in workloads:
+        print(f"Container {container_id}: {workload}")
     # Step 1: Content-Based Filtering (CBF)
     print("=== Content-Based Filtering ===")
     container_data = load_container_data()  # Load unified container data
