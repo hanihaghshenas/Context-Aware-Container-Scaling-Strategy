@@ -28,7 +28,8 @@ def hybrid_model_with_ontology(workloads):
 
     # Step 2: Collaborative Filtering (CF)
     print("\n=== Collaborative Filtering ===")
-    user_item_matrix = create_user_item_matrix()  # Load user-item matrix (can also integrate workloads here)
+    # Create the user-item matrix using actual workloads
+    user_item_matrix = create_user_item_matrix(actual_workloads)
     svd, latent_features = apply_truncated_svd(user_item_matrix)
     reconstructed_matrix = predict_scaling_actions(svd, user_item_matrix)
     print("\nReconstructed Matrix (CF Predictions):")
@@ -36,15 +37,20 @@ def hybrid_model_with_ontology(workloads):
 
     # Step 3: Combine CBF and CF Scores
     print("\n=== Hybrid Model ===")
+
+    # Align dimensions between CBF and CF scores
     cbf_scores = similarity_matrix[:reconstructed_matrix.shape[0], :reconstructed_matrix.shape[1]]
     cbf_scores = cbf_scores / np.max(cbf_scores)  # Normalize to [0, 1]
     cf_scores = reconstructed_matrix / np.max(reconstructed_matrix)  # Normalize to [0, 1]
 
-    # Include workloads in hybrid scores
-    workload_scores = np.array(actual_workloads) / 100  # Normalize workloads to [0, 1]
+    # Ensure workload_scores matches the number of rows in cbf_scores
+    workload_scores = np.array(actual_workloads[:cbf_scores.shape[0]]) / 100  # Normalize workloads to [0, 1]
+
+    # Combine scores with weights
     alpha, beta, gamma = 0.5, 0.3, 0.2  # Weights for CBF, CF, and workload contributions
     hybrid_scores = alpha * cbf_scores + beta * cf_scores + gamma * workload_scores[:, None]
 
+    # Display the Hybrid Scores
     print("Hybrid Scores (CBF + CF + Workloads):")
     print(np.round(hybrid_scores, 2))
 
