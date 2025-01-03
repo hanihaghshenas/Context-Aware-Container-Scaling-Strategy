@@ -1,0 +1,32 @@
+{
+    "Container1": {
+        "CPU": 54,
+        "Memory": 144,
+        "Network": 8,
+        "Workload": 88
+    },
+    "Container2": {
+        "CPU": 79,
+        "Memory": 445,
+        "Network": 11,
+        "Workload": 87
+    },
+    "Container3": {
+        "CPU": 37,
+        "Memory": 385,
+        "Network": 31,
+        "Workload": 64
+    },
+    "Container4": {
+        "CPU": 11,
+        "Memory": 347,
+        "Network": 22,
+        "Workload": 67
+    },
+    "Container5": {
+        "CPU": 43,
+        "Memory": 284,
+        "Network": 10,
+        "Workload": 70
+    }
+}
