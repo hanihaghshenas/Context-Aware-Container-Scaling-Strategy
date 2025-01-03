@@ -1,22 +1,22 @@
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
+import json
 
-# 1. Load Container Metrics with Dynamic Workloads
-def load_container_data_with_workloads(workloads):
-    data = pd.DataFrame({
-        'Container': ['Container1', 'Container2', 'Container3', 'Container4'],
-        'CPU': [30, 35, 80, 25],
-        'Memory': [100, 95, 300, 120],
-        'Network': [10, 12, 30, 9],
-        'Workload': workloads
-    })
+# 1. Load Container Metrics from JSON
+def load_container_data(filename="data/container_data.json"):
+    with open(filename, "r") as f:
+        container_data = json.load(f)
+
+    # Convert to DataFrame
+    data = pd.DataFrame.from_dict(container_data, orient="index").reset_index()
+    data.rename(columns={"index": "Container"}, inplace=True)
     print("=== Loaded Data ===")
     print(data)
     return data
 
 # 2. Compute Cosine Similarity
 def compute_similarity(data):
-    features = data.drop('Container', axis=1)
+    features = data.drop("Container", axis=1)
     similarity_matrix = cosine_similarity(features)
     print("\n=== Cosine Similarity Matrix ===")
     print(similarity_matrix)
@@ -49,7 +49,7 @@ def scale_containers(container, clusters, current_usage, usage_threshold=80):
 # Main Function (optional for testing as a standalone script)
 def main(workloads):
     # Step 1: Load Data
-    data = load_container_data_with_workloads(workloads)
+    data = load_container_data(workloads)
     print("Container Metrics:\n", data)
 
     # Step 2: Compute Similarity

@@ -1,32 +1,32 @@
 {
     "Container1": {
-        "CPU": 54,
-        "Memory": 144,
-        "Network": 8,
-        "Workload": 88
+        "CPU": 96,
+        "Memory": 112,
+        "Network": 31,
+        "Workload": 50
     },
     "Container2": {
-        "CPU": 79,
-        "Memory": 445,
-        "Network": 11,
-        "Workload": 87
+        "CPU": 23,
+        "Memory": 388,
+        "Network": 47,
+        "Workload": 55
     },
     "Container3": {
-        "CPU": 37,
-        "Memory": 385,
-        "Network": 31,
-        "Workload": 64
+        "CPU": 96,
+        "Memory": 376,
+        "Network": 26,
+        "Workload": 82
     },
     "Container4": {
-        "CPU": 11,
-        "Memory": 347,
-        "Network": 22,
-        "Workload": 67
+        "CPU": 12,
+        "Memory": 482,
+        "Network": 39,
+        "Workload": 69
     },
     "Container5": {
-        "CPU": 43,
-        "Memory": 284,
-        "Network": 10,
-        "Workload": 70
+        "CPU": 76,
+        "Memory": 396,
+        "Network": 43,
+        "Workload": 56
     }
 }

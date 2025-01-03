@@ -1,4 +1,4 @@
-from models.similarity_model import load_container_data_with_workloads, compute_similarity, find_clusters
+from models.similarity_model import load_container_data, compute_similarity, find_clusters
 from models.collaborative_model import create_user_item_matrix, apply_truncated_svd, predict_scaling_actions
 from ontology.query_ontology import query_ontology
 from owlready2 import get_ontology
@@ -19,7 +19,7 @@ def hybrid_model_with_ontology(workloads):
 
     # Step 1: Content-Based Filtering (CBF)
     print("\n=== Content-Based Filtering ===")
-    container_data = load_container_data_with_workloads(actual_workloads)  # Pass workloads
+    container_data = load_container_data()  # Load data from JSON
     similarity_matrix = compute_similarity(container_data)
     clusters = find_clusters(similarity_matrix, container_data['Container'])
     print("\nClusters (CBF):")
