@@ -1,19 +1,31 @@
 from sklearn.decomposition import TruncatedSVD
 import pandas as pd
 import numpy as np
+import json
 
-# User-Item Matrix with Actual Workloads
-def create_user_item_matrix(workloads):
-    # Convert workloads into a workload-container matrix
-    data = pd.DataFrame({
-        'Container1': [workloads[0], 0, 0],
-        'Container2': [0, workloads[1], 0],
-        'Container3': [0, 0, workloads[2]],
-        'Container4': [workloads[3], 0, 0]
-    }, index=['Workload1', 'Workload2', 'Workload3'])
+# Load container data from JSON
+def load_container_data(filename="data/container_data.json"):
+    with open(filename, "r") as f:
+        return json.load(f)
+
+# Create User-Item Matrix from Workloads
+def create_user_item_matrix(container_data):
+    if isinstance(container_data, pd.DataFrame):
+        # Convert DataFrame to dictionary format
+        container_data = container_data.set_index("Container").to_dict("index")
+
+    # Ensure container_data is a dictionary
+    workloads = [data["Workload"] for data in container_data.values()]
+    num_containers = len(container_data)
+    data = pd.DataFrame(
+        np.eye(num_containers) * workloads,  # Create diagonal workload matrix
+        columns=container_data.keys(),
+        index=[f"Workload{i + 1}" for i in range(num_containers)],
+    )
     print("\n=== User-Item Matrix ===")
     print(data)
     return data
+
 
 # Apply Truncated SVD
 def apply_truncated_svd(user_item_matrix, n_components=2):
@@ -31,18 +43,21 @@ def predict_scaling_actions(svd, user_item_matrix):
     return reconstructed_matrix
 
 # Main Function for Collaborative Filtering
-def collaborative_filtering(workloads):
-    # Step 1: Create User-Item Matrix
-    user_item_matrix = create_user_item_matrix(workloads)
+def collaborative_filtering():
+    # Step 1: Load container data
+    container_data = load_container_data()
 
-    # Step 2: Apply Truncated SVD
+    # Step 2: Create User-Item Matrix
+    user_item_matrix = create_user_item_matrix(container_data)
+
+    # Step 3: Apply Truncated SVD
     svd, latent_features = apply_truncated_svd(user_item_matrix)
 
-    # Step 3: Reconstruct and Predict
+    # Step 4: Reconstruct and Predict
     predict_scaling_actions(svd, user_item_matrix)
 
 # Test CF
 if __name__ == "__main__":
     # Example workloads; replace with actual workloads from simulation
     simulated_workloads = [63, 74, 84, 56]
-    collaborative_filtering(simulated_workloads)
+    collaborative_filtering()
