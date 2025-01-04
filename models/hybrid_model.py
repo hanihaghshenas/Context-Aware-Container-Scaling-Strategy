@@ -1,11 +1,14 @@
 from models.similarity_model import load_container_data, compute_similarity, find_clusters
 from models.collaborative_model import create_user_item_matrix, apply_truncated_svd, predict_scaling_actions
-from ontology.query_ontology import query_ontology
+from ontology.define_ontology import define_ontology  # Import ontology definition function
+from ontology.query_ontology import query_ontology  # Import ontology query function
 from owlready2 import get_ontology
 import numpy as np
 
-# Load the ontology
-ontology = get_ontology("ontology/container_scaling.owl").load()
+# Load the ontology dynamically after defining it
+def update_and_load_ontology():
+    define_ontology()  # Update the ontology dynamically
+    return get_ontology("ontology/container_scaling.owl").load()
 
 # Hybrid Model with Ontology Integration
 def hybrid_model_with_ontology(workloads):
@@ -61,7 +64,12 @@ def hybrid_model_with_ontology(workloads):
 
     # Step 4: Ontology-Based Contextual Reasoning
     print("\n=== Ontology Integration ===")
+    ontology = update_and_load_ontology()  # Automatically update and load the ontology
+    print("Ontology loaded successfully.")
+    query_ontology()  # Optional query call to display all ontology data
+    # Query and display contexts and actions for containers
     for container in ontology.Container.instances():
+        print(f"Processing container: {container.name}")
         contexts = container.HasContext
         for context in contexts:
             actions = context.Triggers
@@ -70,26 +78,34 @@ def hybrid_model_with_ontology(workloads):
 
     # Step 5: Scaling Decisions Loop with Ontology
     print("\nScaling Decisions:")
-    for i in range(hybrid_scores.shape[0]):  # Loop over available rows in hybrid_scores
+    container_names = list(container_data_dict.keys())  # Use container_data_dict for consistent referencing
+    for i in range(hybrid_scores.shape[0]):  # Loop over containers
+        container_name = container_names[i]
         max_score = np.max(hybrid_scores[i])
         reasons = []
 
         if max_score > 0.7:  # Scaling threshold
-            # Contributions from CBF and CF scores
+            # Check contributions from CBF and CF scores
             if cbf_scores[i, np.argmax(hybrid_scores[i])] > 0.5:
-                reasons.append("high similarity to containers with high resource usage")
+                reasons.append("high similarity to containers with high resource usage (CBF)")
             if cf_scores[i, np.argmax(hybrid_scores[i])] > 0.5:
-                reasons.append("historical workload patterns predicting increased demand")
+                reasons.append("historical workload patterns predicting increased demand (CF)")
 
             # Ontology-based reasoning
-            container_instance = ontology.search_one(iri=f"*{list(container_data.keys())[i]}")
+            container_instance = ontology.search_one(iri=f"*{container_name}")
             if container_instance:
                 for context in container_instance.HasContext:
                     for action in context.Triggers:
-                        reasons.append(f"contextual action '{action.name}' due to '{context.name}'")
+                        reasons.append(f"contextual action '{action.name}' due to context '{context.name}'")
 
-            reason_str = " and ".join(reasons)
-            print(f"{list(container_data.keys())[i]}: Scaling action required due to {reason_str}")
+            # Combine reasons into a single explanation
+            if reasons:
+                reason_str = " and ".join(reasons)
+                print(f"{container_name}: Scaling action required due to {reason_str}")
+            else:
+                print(f"{container_name}: Scaling action required but no specific reasons identified.")
+        else:
+            print(f"{container_name}: No scaling action required (max score: {max_score:.2f}).")
 
 
 # Test Hybrid Model

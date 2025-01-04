@@ -46,6 +46,14 @@
   <rdfs:subClassOf rdf:resource="#Context"/>
 </owl:Class>
 
+<owl:Class rdf:about="#HighNetworkUsage">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LowMemoryAvailability">
+  <rdfs:subClassOf rdf:resource="#Context"/>
+</owl:Class>
+
 <owl:Class rdf:about="#ScaleUp">
   <rdfs:subClassOf rdf:resource="#ScalingAction"/>
 </owl:Class>
@@ -54,38 +62,12 @@
   <rdfs:subClassOf rdf:resource="#ScalingAction"/>
 </owl:Class>
 
-<owl:NamedIndividual rdf:about="#Container1">
-  <rdf:type rdf:resource="#CPUHeavy"/>
-  <HasContext rdf:resource="#peak_hours_instance"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Container2">
-  <rdf:type rdf:resource="#MemoryHeavy"/>
-  <HasContext rdf:resource="#region_europe_instance"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Container3">
-  <rdf:type rdf:resource="#CPUHeavy"/>
-  <HasContext rdf:resource="#region_america_instance"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#Container4">
-  <rdf:type rdf:resource="#MemoryHeavy"/>
-  <HasContext rdf:resource="#peak_hours_instance"/>
-</owl:NamedIndividual>
+<owl:Class rdf:about="#NoAction">
+  <rdfs:subClassOf rdf:resource="#ScalingAction"/>
+</owl:Class>
 
 <owl:NamedIndividual rdf:about="#peak_hours_instance">
   <rdf:type rdf:resource="#PeakHours"/>
-  <Triggers rdf:resource="#scale_up_instance"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#region_europe_instance">
-  <rdf:type rdf:resource="#GeographicRegion"/>
-  <Triggers rdf:resource="#scale_down_instance"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#region_america_instance">
-  <rdf:type rdf:resource="#GeographicRegion"/>
   <Triggers rdf:resource="#scale_up_instance"/>
 </owl:NamedIndividual>
 
@@ -93,8 +75,70 @@
   <rdf:type rdf:resource="#ScaleUp"/>
 </owl:NamedIndividual>
 
+<owl:NamedIndividual rdf:about="#region_europe_instance">
+  <rdf:type rdf:resource="#GeographicRegion"/>
+  <Triggers rdf:resource="#scale_down_instance"/>
+</owl:NamedIndividual>
+
 <owl:NamedIndividual rdf:about="#scale_down_instance">
   <rdf:type rdf:resource="#ScaleDown"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#region_america_instance">
+  <rdf:type rdf:resource="#GeographicRegion"/>
+  <Triggers rdf:resource="#scale_up_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#high_network_instance">
+  <rdf:type rdf:resource="#HighNetworkUsage"/>
+  <Triggers rdf:resource="#scale_up_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#low_memory_instance">
+  <rdf:type rdf:resource="#LowMemoryAvailability"/>
+  <Triggers rdf:resource="#scale_down_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#no_action_instance">
+  <rdf:type rdf:resource="#NoAction"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container1">
+  <rdf:type rdf:resource="#CPUHeavy"/>
+  <HasContext rdf:resource="#region_america_instance"/>
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+  <HasContext rdf:resource="#low_memory_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container2">
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+  <HasContext rdf:resource="#high_network_instance"/>
+  <HasContext rdf:resource="#region_europe_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container3">
+  <rdf:type rdf:resource="#CPUHeavy"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+  <HasContext rdf:resource="#high_network_instance"/>
+  <HasContext rdf:resource="#region_america_instance"/>
+  <HasContext rdf:resource="#low_memory_instance"/>
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container4">
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+  <HasContext rdf:resource="#region_europe_instance"/>
+  <HasContext rdf:resource="#high_network_instance"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#Container5">
+  <rdf:type rdf:resource="#MemoryHeavy"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+  <HasContext rdf:resource="#low_memory_instance"/>
+  <HasContext rdf:resource="#region_europe_instance"/>
+  <rdf:type rdf:resource="#CPUHeavy"/>
+  <HasContext rdf:resource="#high_network_instance"/>
 </owl:NamedIndividual>
 
 
