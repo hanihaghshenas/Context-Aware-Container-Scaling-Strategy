@@ -108,6 +108,8 @@
   <HasContext rdf:resource="#region_america_instance"/>
   <rdf:type rdf:resource="#MemoryHeavy"/>
   <HasContext rdf:resource="#low_memory_instance"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+  <HasContext rdf:resource="#high_network_instance"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Container2">
@@ -115,6 +117,8 @@
   <HasContext rdf:resource="#peak_hours_instance"/>
   <HasContext rdf:resource="#high_network_instance"/>
   <HasContext rdf:resource="#region_europe_instance"/>
+  <rdf:type rdf:resource="#CPUHeavy"/>
+  <HasContext rdf:resource="#low_memory_instance"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Container3">
@@ -130,6 +134,9 @@
   <rdf:type rdf:resource="#MemoryHeavy"/>
   <HasContext rdf:resource="#region_europe_instance"/>
   <HasContext rdf:resource="#high_network_instance"/>
+  <HasContext rdf:resource="#peak_hours_instance"/>
+  <HasContext rdf:resource="#low_memory_instance"/>
+  <rdf:type rdf:resource="#CPUHeavy"/>
 </owl:NamedIndividual>
 
 <owl:NamedIndividual rdf:about="#Container5">

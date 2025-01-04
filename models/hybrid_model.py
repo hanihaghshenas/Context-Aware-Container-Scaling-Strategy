@@ -79,12 +79,16 @@ def hybrid_model_with_ontology(workloads):
     # Step 5: Scaling Decisions Loop with Ontology
     print("\nScaling Decisions:")
     container_names = list(container_data_dict.keys())  # Use container_data_dict for consistent referencing
+    scaling_decisions = []  # To collect decisions
+
     for i in range(hybrid_scores.shape[0]):  # Loop over containers
         container_name = container_names[i]
         max_score = np.max(hybrid_scores[i])
         reasons = []
+        action = "No scaling"  # Default action
 
         if max_score > 0.7:  # Scaling threshold
+            action = "Scaling required"
             # Check contributions from CBF and CF scores
             if cbf_scores[i, np.argmax(hybrid_scores[i])] > 0.5:
                 reasons.append("high similarity to containers with high resource usage (CBF)")
@@ -95,17 +99,21 @@ def hybrid_model_with_ontology(workloads):
             container_instance = ontology.search_one(iri=f"*{container_name}")
             if container_instance:
                 for context in container_instance.HasContext:
-                    for action in context.Triggers:
-                        reasons.append(f"contextual action '{action.name}' due to context '{context.name}'")
+                    for action_instance in context.Triggers:
+                        reasons.append(
+                            f"contextual action '{action_instance.name}' due to context '{context.name}'")
 
-            # Combine reasons into a single explanation
-            if reasons:
-                reason_str = " and ".join(reasons)
-                print(f"{container_name}: Scaling action required due to {reason_str}")
-            else:
-                print(f"{container_name}: Scaling action required but no specific reasons identified.")
-        else:
-            print(f"{container_name}: No scaling action required (max score: {max_score:.2f}).")
+        # Combine reasons into a single explanation
+        reason_str = " and ".join(reasons) if reasons else "no specific reasons"
+        print(f"{container_name}: {action} ({reason_str}).")
+        scaling_decisions.append({
+            "container": container_name,
+            "action": action,
+            "max_score": max_score,
+            "reasons": reasons
+        })
+
+    return hybrid_scores, scaling_decisions
 
 
 # Test Hybrid Model
