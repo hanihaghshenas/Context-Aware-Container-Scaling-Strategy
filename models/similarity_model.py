@@ -1,26 +1,26 @@
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
+import json
 
+# 1. Load Container Metrics from JSON
+def load_container_data(filename="data/container_data.json"):
+    with open(filename, "r") as f:
+        container_data = json.load(f)
 
-# 1. Load Container Metrics
-def load_container_data():
-    # Example dataset
-    data = pd.DataFrame({
-        'Container': ['Container1', 'Container2', 'Container3', 'Container4'],
-        'CPU': [30, 35, 80, 25],
-        'Memory': [100, 95, 300, 120],
-        'Network': [10, 12, 30, 9]
-    })
+    # Convert to DataFrame
+    data = pd.DataFrame.from_dict(container_data, orient="index").reset_index()
+    data.rename(columns={"index": "Container"}, inplace=True)
+    print("=== Loaded Data ===")
+    print(data)
     return data
-
 
 # 2. Compute Cosine Similarity
 def compute_similarity(data):
-    features = data.drop('Container', axis=1)
+    features = data.drop("Container", axis=1)
     similarity_matrix = cosine_similarity(features)
+    print("\n=== Cosine Similarity Matrix ===")
+    print(similarity_matrix)
     return similarity_matrix
-
 
 # 3. Identify Clusters Based on Similarity
 def find_clusters(similarity_matrix, containers, threshold=0.8):
@@ -31,8 +31,10 @@ def find_clusters(similarity_matrix, containers, threshold=0.8):
             for j in range(len(similarity_matrix))
             if similarity_matrix[i, j] >= threshold and i != j
         ]
+    print("\n=== Clusters Based on Similarity ===")
+    for container, similar in clusters.items():
+        print(f"{container} is similar to: {similar}")
     return clusters
-
 
 # 4. Scaling Decision Logic
 def scale_containers(container, clusters, current_usage, usage_threshold=80):
@@ -44,10 +46,10 @@ def scale_containers(container, clusters, current_usage, usage_threshold=80):
         print(f"No scaling required for container {container}")
 
 
-# Main Function to Run the Workflow
-def main():
+# Main Function (optional for testing as a standalone script)
+def main(workloads):
     # Step 1: Load Data
-    data = load_container_data()
+    data = load_container_data(workloads)
     print("Container Metrics:\n", data)
 
     # Step 2: Compute Similarity
@@ -66,4 +68,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # Example workloads; replace with actual workloads from simulation
+    simulated_workloads = [63, 74, 84, 56]
+    main(simulated_workloads)

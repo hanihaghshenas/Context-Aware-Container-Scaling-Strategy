@@ -1,0 +1,139 @@
+[
+    {
+        "workloads": [
+            [
+                "Container1",
+                "Container1: Workload 73%"
+            ],
+            [
+                "Container2",
+                "Container2: Workload 99%"
+            ],
+            [
+                "Container3",
+                "Container3: Workload 72%"
+            ],
+            [
+                "Container4",
+                "Container4: Workload 99%"
+            ],
+            [
+                "Container5",
+                "Container5: Workload 88%"
+            ]
+        ],
+        "hybrid_scores": [
+            [
+                0.646,
+                0.6150069651848219,
+                0.6345120917233019,
+                0.6454931304760412,
+                0.6413625888734212
+            ],
+            [
+                0.6670069651848218,
+                0.9979999999999998,
+                0.6748166617970648,
+                0.6665818814840385,
+                0.6416736089325117
+            ],
+            [
+                0.6325120917233019,
+                0.6208166617970649,
+                0.6439999999999998,
+                0.6360164864514214,
+                0.6270254570643641
+            ],
+            [
+                0.6974931304760412,
+                0.6665818814840385,
+                0.6900164864514213,
+                0.9979999999999998,
+                0.6942286067093153
+            ],
+            [
+                0.6713625888734213,
+                0.6196736089325117,
+                0.6590254570643641,
+                0.6722286067093152,
+                0.6759999999999998
+            ]
+        ],
+        "scaling_decisions": [
+            {
+                "container": "Container1",
+                "action": "No scaling",
+                "max_score": 0.646,
+                "reasons": []
+            },
+            {
+                "container": "Container2",
+                "action": "Scaling required",
+                "max_score": 0.9979999999999998,
+                "reasons": [
+                    "high similarity to containers with high resource usage (CBF)",
+                    "historical workload patterns predicting increased demand (CF)",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_up_instance' due to context 'high_network_instance'",
+                    "contextual action 'scale_up_instance' due to context 'high_network_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_down_instance' due to context 'low_memory_instance'",
+                    "contextual action 'scale_down_instance' due to context 'low_memory_instance'",
+                    "contextual action 'scale_up_instance' due to context 'high_network_instance'",
+                    "contextual action 'scale_up_instance' due to context 'high_network_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'"
+                ]
+            },
+            {
+                "container": "Container3",
+                "action": "No scaling",
+                "max_score": 0.6439999999999998,
+                "reasons": []
+            },
+            {
+                "container": "Container4",
+                "action": "Scaling required",
+                "max_score": 0.9979999999999998,
+                "reasons": [
+                    "high similarity to containers with high resource usage (CBF)",
+                    "historical workload patterns predicting increased demand (CF)",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'",
+                    "contextual action 'scale_up_instance' due to context 'high_network_instance'",
+                    "contextual action 'scale_up_instance' due to context 'high_network_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_down_instance' due to context 'low_memory_instance'",
+                    "contextual action 'scale_down_instance' due to context 'low_memory_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_up_instance' due to context 'peak_hours_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'",
+                    "contextual action 'scale_down_instance' due to context 'region_europe_instance'"
+                ]
+            },
+            {
+                "container": "Container5",
+                "action": "No scaling",
+                "max_score": 0.6759999999999998,
+                "reasons": []
+            }
+        ],
+        "summary": {
+            "total_containers": 5,
+            "scale_up": 2,
+            "no_action": 3,
+            "common_reasons": {
+                "contextual action 'scale_up_instance' due to context 'peak_hours_instance'": 8,
+                "contextual action 'scale_down_instance' due to context 'region_europe_instance'": 8,
+                "contextual action 'scale_up_instance' due to context 'high_network_instance'": 6,
+                "contextual action 'scale_down_instance' due to context 'low_memory_instance'": 4,
+                "high similarity to containers with high resource usage (CBF)": 2
+            }
+        }
+    }
+]
